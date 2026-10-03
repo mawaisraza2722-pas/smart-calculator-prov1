@@ -541,6 +541,60 @@
   #drawer-write .wq-area,#drawer-draw .wq-area{overflow-y:hidden;}
 
   ::-webkit-scrollbar{width:0;height:0;}
+
+/* ===== Smart Calculator Pro: Calculator Tools Pack ===== */
+.tools-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:14px 14px 28px;touch-action:pan-y;-webkit-overflow-scrolling:touch;}
+.tools-tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 1px 10px;scrollbar-width:none;}
+.tools-tabs::-webkit-scrollbar{display:none}
+.tools-tab{flex:0 0 auto;border:1px solid var(--outline);background:var(--panel);color:var(--text);border-radius:18px;padding:8px 11px;font:600 11px var(--font-ui);cursor:pointer;white-space:nowrap;}
+.tools-tab.active{background:var(--accent);color:var(--accent-ink);border-color:transparent;}
+.tool-card{display:none;background:var(--panel);border:1px solid var(--outline);border-radius:var(--radius-md);padding:15px;box-shadow:0 10px 28px rgba(0,0,0,.08);}
+.tool-card.active{display:block;animation:fadein .18s ease;}
+.tool-title{font-size:17px;font-weight:700;margin:0 0 4px;}
+.tool-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px;}
+.tool-head .tool-title{margin:0;}
+.tool-detail-btn{white-space:nowrap;border:1px solid var(--outline);background:var(--panel-2);color:var(--text);border-radius:10px;padding:7px 9px;font:700 11px var(--font-ui);cursor:pointer;}
+.tool-detail-btn:active{transform:scale(.97);}
+.tool-ai-card{background:var(--panel);border:1px solid var(--outline);border-radius:var(--radius-md);padding:15px;}
+.tool-ai-text{width:100%;min-height:110px;resize:vertical;border:1px solid var(--outline);background:var(--panel-2);color:var(--text);border-radius:12px;padding:11px;font:500 14px var(--font-ui);outline:none;}
+.tool-ai-text:focus{border-color:var(--accent);}
+
+.tool-sub{font-size:11px;color:var(--text-dim);margin:0 0 14px;line-height:1.45;}
+.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.tool-grid.one{grid-template-columns:1fr;}
+.tool-field{min-width:0;}
+.tool-field label{display:block;font-size:11px;color:var(--text-dim);margin:0 0 5px;font-weight:600;}
+.tool-field input,.tool-field select,.tool-select,.tool-input{
+  width:100%;height:43px;border:1px solid var(--outline);background:var(--panel-2);color:var(--text);
+  border-radius:11px;padding:0 11px;font:500 14px var(--font-ui);outline:none;
+}
+.tool-field input:focus,.tool-field select:focus{border-color:var(--accent);}
+.tool-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.tool-btn{border:1px solid var(--outline);background:var(--panel-2);color:var(--text);border-radius:11px;padding:10px 13px;font:700 12px var(--font-ui);cursor:pointer;}
+.tool-btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent;}
+.tool-btn:active{transform:scale(.97);}
+.tool-result{margin-top:13px;padding:12px;border-radius:12px;background:var(--panel-2);border:1px solid var(--outline);line-height:1.55;font-size:13px;word-break:break-word;}
+.tool-result strong{font-size:16px;}
+.tool-muted{color:var(--text-dim);font-size:11px;}
+.tool-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;}
+.tool-kpi{padding:10px;border:1px solid var(--outline);border-radius:10px;background:var(--panel);}
+.tool-kpi b{display:block;font-size:15px;margin-top:3px;}
+.tool-kpi span{font-size:10px;color:var(--text-dim);}
+.tool-status{font-size:11px;color:var(--text-dim);margin-top:8px;min-height:16px;}
+.tool-swap{align-self:end;height:43px;min-width:43px;padding:0;font-size:17px;}
+@media(max-width:370px){.tool-grid{grid-template-columns:1fr}.tool-kpis{grid-template-columns:1fr}}
+
+/* Clean compact Tools shortcut on Home */
+.home-tools-mini{
+  width:100%;max-width:420px;margin:4px auto 0;display:flex;align-items:center;gap:10px;
+  min-height:44px;padding:0 14px;border:1px solid var(--outline);border-radius:14px;
+  background:var(--panel);color:var(--text);font:700 13px var(--font-ui);
+  cursor:pointer;box-sizing:border-box;transition:transform .15s ease,background .15s ease,border-color .15s ease;
+}
+.home-tools-mini:active{transform:scale(.985);}
+.home-tools-mini:hover{background:var(--panel-2);border-color:color-mix(in srgb,var(--accent) 45%,var(--outline));}
+.home-tools-mini-icon{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:color-mix(in srgb,var(--accent) 14%,transparent);font-size:16px;}
+.home-tools-mini-arrow{margin-left:auto;font-size:21px;line-height:1;color:var(--text-dim);}
 </style>
 </head>
 <body>
@@ -564,9 +618,14 @@
         <span class="em">🧠</span>
         <span>Extreme Calculator<small>Basic + Scientific combined · 65 symbols · step-by-step · equation solver</small></span>
       </button>
+
       <button class="mode-card ask-card" onclick="openAIChat()">
         <span class="em">💬</span>
         <span>Ask Questions<small>AI Math Teacher · English · Urdu · Roman Urdu · Hindi · voice &amp; photo</small></span>
+      </button>
+
+      <button class="home-tools-mini" onclick="goTo('tools')" title="Calculator Tools" aria-label="Open Calculator Tools">
+        <span class="home-tools-mini-icon">🧮</span><span>Tools</span><span class="home-tools-mini-arrow">›</span>
       </button>
     </div>
     <footer class="homefoot">
@@ -580,7 +639,7 @@
       <button class="icon-btn back-btn" onclick="goTo('home')">←</button>
       <span class="logo-img" style="width:26px;height:26px;border-radius:7px;" role="img" aria-label="Smart Calculator Pro"></span>
       <h1>Extreme Calculator</h1>
-      <button class="icon-btn" onclick="openWritePad()" title="Write a math question">✍️</button>
+      <button class="icon-btn" onclick="goTo('tools')" title="Calculator Tools">🧮</button>
       <button class="icon-btn" id="angle-btn" onclick="cycleAngleMode()">DEG</button>
       <button class="icon-btn" onclick="openDrawer('theme')" title="Themes">🎨</button>
     </header>
@@ -619,6 +678,158 @@
 
     <div class="keypad" id="calc-keypad"></div>
     <button class="fab-ai" id="fab-ai" onclick="openAIChatFromCalc()" title="Ask AI">💬</button>
+  </section>
+
+
+  <!-- ================= CALCULATOR TOOLS ================= -->
+  <section class="view" id="view-tools">
+    <header class="topbar">
+      <button class="icon-btn back-btn" onclick="goTo('home')">←</button>
+      <span class="logo-img" style="width:26px;height:26px;border-radius:7px;" role="img" aria-label="Smart Calculator Pro"></span>
+      <h1>Calculator Tools</h1>
+      <button class="icon-btn" onclick="openDrawer('theme')" title="Themes">🎨</button>
+    </header>
+    <div class="tools-scroll">
+      <div class="tools-tabs" id="tools-tabs">
+        <button class="tools-tab active" data-tool="unit" onclick="switchTool('unit')">📏 Unit</button>
+        <button class="tools-tab" data-tool="currency" onclick="switchTool('currency')">💱 Currency</button>
+        <button class="tools-tab" data-tool="percent" onclick="switchTool('percent')">％ Percent</button>
+        <button class="tools-tab" data-tool="age" onclick="switchTool('age')">🎂 Age</button>
+        <button class="tools-tab" data-tool="bmi" onclick="switchTool('bmi')">⚖️ BMI</button>
+        <button class="tools-tab" data-tool="discount" onclick="switchTool('discount')">🏷️ Discount</button>
+        <button class="tools-tab" data-tool="emi" onclick="switchTool('emi')">🏦 EMI</button>
+        <button class="tools-tab" data-tool="tax" onclick="switchTool('tax')">🧾 GST/Tax</button>
+        <button class="tools-tab" data-tool="date" onclick="switchTool('date')">📅 Date & Time</button>
+        <button class="tools-tab" data-tool="timezone" onclick="switchTool('timezone')">🌍 Time Zone</button>
+        <button class="tools-tab" data-tool="aichat" onclick="switchTool('aichat')">🤖 AI Chat</button>
+      </div>
+
+      <div class="tool-card active" data-card="unit">
+        <div class="tool-head"><h2 class="tool-title">Unit Converter</h2><button class="tool-detail-btn" onclick="openToolDetails('unit')">📖 Details</button></div><p class="tool-sub">Length, weight, temperature, speed and area.</p>
+        <div class="tool-grid">
+          <div class="tool-field"><label>Category</label><select id="unit-category" onchange="populateUnitOptions()"><option value="length">Length</option><option value="weight">Weight</option><option value="temperature">Temperature</option><option value="speed">Speed</option><option value="area">Area</option></select></div>
+          <div class="tool-field"><label>Value</label><input id="unit-value" type="number" inputmode="decimal" value="1" oninput="convertUnit()"></div>
+          <div class="tool-field"><label>From</label><select id="unit-from" onchange="convertUnit()"></select></div>
+          <div class="tool-field"><label>To</label><select id="unit-to" onchange="convertUnit()"></select></div>
+        </div>
+        <div class="tool-result" id="unit-result">1</div>
+      </div>
+
+      <div class="tool-card" data-card="currency">
+        <div class="tool-head"><h2 class="tool-title">Currency Converter 💱</h2><button class="tool-detail-btn" onclick="openToolDetails('currency')">📖 Details</button></div><p class="tool-sub">Gets the latest available exchange rate from a live online rate service. Internet is required for refresh.</p>
+        <div class="tool-grid">
+          <div class="tool-field"><label>Amount</label><input id="fx-amount" type="number" inputmode="decimal" value="1"></div>
+          <div class="tool-field"><label>From</label><select id="fx-from"></select></div>
+          <div class="tool-field"><label>To</label><select id="fx-to"></select></div>
+          <button class="tool-btn tool-swap" onclick="swapFx()" title="Swap currencies">⇄</button>
+        </div>
+        <div class="tool-actions"><button class="tool-btn primary" onclick="convertCurrency()">Get Live Rate</button></div>
+        <div class="tool-result" id="fx-result">Enter an amount and tap Get Live Rate.</div>
+        <div class="tool-status" id="fx-status"></div>
+      </div>
+
+      <div class="tool-card" data-card="percent">
+        <div class="tool-head"><h2 class="tool-title">Percentage Calculator</h2><button class="tool-detail-btn" onclick="openToolDetails('percent')">📖 Details</button></div><p class="tool-sub">Find a percentage, percentage change, or what percent one number is of another.</p>
+        <div class="tool-grid">
+          <div class="tool-field"><label>What is % of a number?</label><input id="pct-a" type="number" value="20"></div>
+          <div class="tool-field"><label>Number</label><input id="pct-b" type="number" value="150"></div>
+          <div class="tool-field"><label>Value A</label><input id="pct-c" type="number" value="120"></div>
+          <div class="tool-field"><label>Value B</label><input id="pct-d" type="number" value="150"></div>
+        </div>
+        <div class="tool-actions"><button class="tool-btn primary" onclick="calcPercent()">Calculate</button></div>
+        <div class="tool-result" id="pct-result">20% of 150 = <strong>30</strong><br>120 is <strong>80%</strong> of 150.</div>
+      </div>
+
+      <div class="tool-card" data-card="age">
+        <div class="tool-head"><h2 class="tool-title">Age Calculator 🎂</h2><button class="tool-detail-btn" onclick="openToolDetails('age')">📖 Details</button></div><p class="tool-sub">Calculate exact age and the next birthday from a date of birth.</p>
+        <div class="tool-grid">
+          <div class="tool-field"><label>Date of birth</label><input id="age-dob" type="date"></div>
+          <div class="tool-field"><label>Calculate on</label><input id="age-on" type="date"></div>
+        </div>
+        <div class="tool-actions"><button class="tool-btn primary" onclick="calcAge()">Calculate Age</button></div>
+        <div class="tool-result" id="age-result">Choose your date of birth.</div>
+      </div>
+
+      <div class="tool-card" data-card="bmi">
+        <div class="tool-head"><h2 class="tool-title">BMI Calculator</h2><button class="tool-detail-btn" onclick="openToolDetails('bmi')">📖 Details</button></div><p class="tool-sub">Metric or imperial height and weight.</p>
+        <div class="tool-grid">
+          <div class="tool-field"><label>Mode</label><select id="bmi-mode" onchange="updateBmiLabels()"><option value="metric">Metric (kg / cm)</option><option value="imperial">Imperial (lb / in)</option></select></div>
+          <div class="tool-field"><label id="bmi-weight-label">Weight (kg)</label><input id="bmi-weight" type="number" inputmode="decimal" value="70"></div>
+          <div class="tool-field"><label id="bmi-height-label">Height (cm)</label><input id="bmi-height" type="number" inputmode="decimal" value="170"></div>
+        </div>
+        <div class="tool-actions"><button class="tool-btn primary" onclick="calcBMI()">Calculate BMI</button></div>
+        <div class="tool-result" id="bmi-result">BMI will appear here.</div>
+      </div>
+
+      <div class="tool-card" data-card="discount">
+        <div class="tool-head"><h2 class="tool-title">Discount + Profit Calculator</h2><button class="tool-detail-btn" onclick="openToolDetails('discount')">📖 Details</button></div><p class="tool-sub">Calculate sale price, discount savings, profit and profit margin.</p>
+        <div class="tool-grid">
+          <div class="tool-field"><label>Original / Marked Price</label><input id="disc-price" type="number" value="1000"></div>
+          <div class="tool-field"><label>Discount %</label><input id="disc-pct" type="number" value="10"></div>
+          <div class="tool-field"><label>Your Cost Price</label><input id="profit-cost" type="number" value="700"></div>
+          <div class="tool-field"><label>Selling Price (optional)</label><input id="profit-sale" type="number" placeholder="Uses discounted price"></div>
+        </div>
+        <div class="tool-actions"><button class="tool-btn primary" onclick="calcDiscountProfit()">Calculate</button></div>
+        <div class="tool-result" id="disc-result">Results will appear here.</div>
+      </div>
+
+      <div class="tool-card" data-card="emi">
+        <div class="tool-head"><h2 class="tool-title">EMI / Loan Calculator</h2><button class="tool-detail-btn" onclick="openToolDetails('emi')">📖 Details</button></div><p class="tool-sub">Monthly payment, total payment and total interest.</p>
+        <div class="tool-grid">
+          <div class="tool-field"><label>Loan Amount</label><input id="emi-principal" type="number" value="100000"></div>
+          <div class="tool-field"><label>Annual Interest %</label><input id="emi-rate" type="number" step="0.01" value="12"></div>
+          <div class="tool-field"><label>Tenure (months)</label><input id="emi-months" type="number" value="24"></div>
+          <div class="tool-field"><label>Extra monthly payment (optional)</label><input id="emi-extra" type="number" value="0"></div>
+        </div>
+        <div class="tool-actions"><button class="tool-btn primary" onclick="calcEMI()">Calculate EMI</button></div>
+        <div class="tool-result" id="emi-result">EMI results will appear here.</div>
+      </div>
+
+      <div class="tool-card" data-card="tax">
+        <div class="tool-head"><h2 class="tool-title">GST / Tax Calculator</h2><button class="tool-detail-btn" onclick="openToolDetails('tax')">📖 Details</button></div><p class="tool-sub">Add tax to a net amount or extract tax from a tax-inclusive amount.</p>
+        <div class="tool-grid">
+          <div class="tool-field"><label>Amount</label><input id="tax-amount" type="number" value="1000"></div>
+          <div class="tool-field"><label>Tax / GST %</label><input id="tax-rate" type="number" value="18"></div>
+          <div class="tool-field"><label>Mode</label><select id="tax-mode"><option value="exclusive">Add tax (exclusive)</option><option value="inclusive">Extract tax (inclusive)</option></select></div>
+        </div>
+        <div class="tool-actions"><button class="tool-btn primary" onclick="calcTax()">Calculate Tax</button></div>
+        <div class="tool-result" id="tax-result">Tax results will appear here.</div>
+      </div>
+
+      <div class="tool-card" data-card="date">
+        <div class="tool-head"><h2 class="tool-title">Date & Time Calculator</h2><button class="tool-detail-btn" onclick="openToolDetails('date')">📖 Details</button></div><p class="tool-sub">Date difference plus add or subtract days from a date.</p>
+        <div class="tool-grid">
+          <div class="tool-field"><label>Start date</label><input id="date-start" type="date"></div>
+          <div class="tool-field"><label>End date</label><input id="date-end" type="date"></div>
+          <div class="tool-field"><label>Days to add / subtract</label><input id="date-days" type="number" value="30"></div>
+          <div class="tool-field"><label>Direction</label><select id="date-dir"><option value="add">Add days</option><option value="sub">Subtract days</option></select></div>
+        </div>
+        <div class="tool-actions"><button class="tool-btn primary" onclick="calcDateTool()">Calculate Dates</button></div>
+        <div class="tool-result" id="date-result">Choose dates to begin.</div>
+      </div>
+
+      <div class="tool-card" data-card="timezone">
+        <div class="tool-head"><h2 class="tool-title">Time Zone Converter 🌍</h2><button class="tool-detail-btn" onclick="openToolDetails('timezone')">📖 Details</button></div><p class="tool-sub">Convert a specific local date/time between major IANA time zones.</p>
+        <div class="tool-grid">
+          <div class="tool-field"><label>Date & time</label><input id="tz-datetime" type="datetime-local"></div>
+          <div class="tool-field"><label>From time zone</label><select id="tz-from"></select></div>
+          <div class="tool-field"><label>To time zone</label><select id="tz-to"></select></div>
+        </div>
+        <div class="tool-actions"><button class="tool-btn primary" onclick="convertTimezone()">Convert Time</button></div>
+        <div class="tool-result" id="tz-result">Choose a date/time and zones.</div>
+      </div>
+
+      <div class="tool-card" data-card="aichat">
+        <div class="tool-head"><h2 class="tool-title">AI Chat 🤖</h2><button class="tool-detail-btn" onclick="openToolDetails('aichat')">📖 Details</button></div>
+        <p class="tool-sub">Ask calculation questions, formulas, conversions, homework-style maths, or ask for a step-by-step explanation.</p>
+        <textarea id="tools-ai-input" class="tool-ai-text" placeholder="Example: 15% of 240 kitna hai? Formula aur steps bhi batao."></textarea>
+        <div class="tool-actions">
+          <button class="tool-btn primary" onclick="askToolsAI()">🤖 Ask AI</button>
+          <button class="tool-btn" onclick="openAIChat()">💬 Open Full AI Chat</button>
+        </div>
+        <div class="tool-result" id="tools-ai-result">AI answer yahan show hoga. Internet/full AI features may depend on your app's AI connection.</div>
+      </div>
+    </div>
   </section>
 
   <!-- ================= AI ASK QUESTIONS ================= -->
@@ -762,17 +973,24 @@
       <p id="ai-cfg-status" style="font-size:12.5px;font-weight:600;margin:0 0 18px;color:var(--text-dim);"></p>
       </details>
 
-      <div class="wq-label"><span>💾 Device me file download karo</span></div>
-      <p id="save-ai-status" style="font-size:12.5px;font-weight:600;margin:0 0 8px;color:var(--text-dim);">Tap karte hi file aapke phone/PC ke Downloads me save hogi (ek .zip file).</p>
+      <div class="wq-label"><span>💾 Download AI — single file</span></div>
+      <p id="save-ai-status" style="font-size:12.5px;font-weight:600;margin:0 0 8px;color:var(--text-dim);">Har AI ek hi packaged .zip file me Downloads mein save hoga. File name automatically app ke naam se hoga.</p>
       <div id="save-ai-bar" style="display:none;height:10px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden;margin:0 0 12px;"><div id="save-ai-bar-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#22d3ee,#a855f7);transition:width .2s;"></div></div>
       <div id="save-ai-buttons" style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
-        <button class="mode-card" style="justify-content:center;" onclick="saveOfflineAiToDevice('small')">💾 File 1 — Small AI download (~400MB)</button>
-        <button class="mode-card" style="justify-content:center;" onclick="saveOfflineAiToDevice('better')">💾 File 2 — Better AI download (~1.1GB)</button>
+        <button class="mode-card" style="justify-content:center;" onclick="saveOfflineAiToDevice('small')">💾 Download Small AI — 1 file (~400MB)</button>
+        <button class="mode-card" style="justify-content:center;" onclick="saveOfflineAiToDevice('better')">💾 Download Large AI — 1 file (~1.1GB)</button>
       </div>
-      <div class="wq-label"><span>🧠 Ya seedha app me chalao (bina file save kiye)</span></div>
+      <div class="wq-label"><span>🧠 Small AI — App me use karo</span></div>
+      <div id="offline-ai-toggle" style="display:none;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.035);margin-bottom:10px;">
+        <div>
+          <div id="offline-ai-toggle-title" style="font-weight:800;font-size:14px;">Small AI: OFF</div>
+          <div id="offline-ai-toggle-sub" style="font-size:11.5px;color:var(--text-dim);margin-top:3px;">Downloaded model device me saved hai.</div>
+        </div>
+        <button id="offline-ai-toggle-btn" class="primary" onclick="toggleOfflineAi()" style="min-width:78px;">OFF</button>
+      </div>
       <div id="offline-ai-buttons" style="display:flex;flex-direction:column;gap:10px;">
         <button class="mode-card" style="justify-content:center;" onclick="downloadOfflineAiModel('small')">🧠 App me chalao — Small AI (~400MB, fast)</button>
-        <button class="mode-card" style="justify-content:center;" onclick="downloadOfflineAiModel('better')">🧠 App me chalao — Better AI (~1.1GB, smarter)</button>
+        <button class="mode-card" style="justify-content:center;" onclick="downloadOfflineAiModel('better')">🧠 App me chalao — Large AI (~1.1GB, smarter)</button>
       </div>
       <button class="danger-link" id="offline-ai-remove" style="display:none;margin-top:14px;" onclick="removeOfflineAiModel()">🗑 Unload Model (frees memory)</button>
       <p style="font-size:11.5px;color:var(--text-dim);line-height:1.6;margin-top:16px;">
@@ -898,7 +1116,8 @@
   <div id="dr-full">
     <div class="dr-fbar">
       <button class="x" onclick="drCloseFull()" title="Band karo">✕</button>
-      <button onclick="drToggleBar()" id="dr-fmove" title="Bar upar/niche karo">⬇️</button>
+      <button onclick="drMoveBar('top')" title="Buttons upar">⬆️</button>
+      <button onclick="drMoveBar('bottom')" title="Buttons niche">⬇️</button>
       <button class="on" id="dr-fpen" onclick="drSetTool('pen')">✏️</button>
       <button id="dr-feraser" onclick="drSetTool('eraser')">🩹</button>
       <button onclick="drUndo()">↩️</button>
@@ -2027,6 +2246,60 @@ function closeDrawers(){
   document.querySelectorAll('.drawer').forEach(d=>d.classList.remove('show'));
 }
 
+function openToolDetails(tool){
+  let currencyExtra = '';
+  if(tool==='currency'){
+    const amountEl=document.getElementById('fx-amount'), fromEl=document.getElementById('fx-from'), toEl=document.getElementById('fx-to');
+    const amount=amountEl ? Number(amountEl.value||0) : 0;
+    const from=fromEl ? fromEl.value : '';
+    const to=toEl ? toEl.value : '';
+    const resultEl=document.getElementById('fx-result');
+    const statusEl=document.getElementById('fx-status');
+    const resultText=resultEl ? resultEl.innerText.trim() : '';
+    const statusText=statusEl ? statusEl.innerText.trim() : '';
+    const fromName = (typeof FX_CURRENCIES !== 'undefined' && FX_CURRENCIES[from]) ? FX_CURRENCIES[from] : from;
+    const toName = (typeof FX_CURRENCIES !== 'undefined' && FX_CURRENCIES[to]) ? FX_CURRENCIES[to] : to;
+    let rateLine = '';
+    if(resultText){
+      const m = resultText.match(/1\s+([A-Z]{3})\s*=\s*([0-9.,]+)\s+([A-Z]{3})/);
+      if(m) rateLine = `<p><b>Exchange rate:</b> 1 ${m[1]} (${fromName}) = ${m[2]} ${m[3]} (${toName})</p>`;
+    }
+    currencyExtra = `<div class="tool-detail-live"><p><b>Conversion:</b> ${fmtTool(amount,6)} ${from} (${fromName}) → ${to} (${toName})</p>${resultText ? `<p><b>Result shown:</b> ${resultText.replace(/\n/g,'<br>')}</p>` : ''}${rateLine}${statusText ? `<p><b>Rate status:</b> ${statusText}</p>` : ''}</div>`;
+  }
+  const info = {
+    unit:{title:'Unit Converter — Details',body:'<p><b>Purpose:</b> Convert common measurements without manually calculating.</p><p><b>Categories:</b> Length, weight, temperature, speed and area.</p><p><b>How to use:</b> Select a category, enter a value, choose From and To units. The converted result updates automatically.</p>'},
+    currency:{title:'Currency Converter — Details',body:`<p><b>Purpose:</b> Convert money between supported currencies.</p><p><b>How it works:</b> The app takes the amount from the <b>From</b> currency and converts it into the selected <b>To</b> currency using the latest available online rate.</p><p><b>Example:</b> If you select <b>PKR → USD</b>, the detail shows exactly how many US Dollars the entered Pakistani Rupees convert to.</p>${currencyExtra}<p><b>Rate:</b> The displayed rate is an online reference rate and can differ from the exact rate offered by a bank, card network or exchange shop.</p>`},
+    percent:{title:'Percentage Calculator — Details',body:'<p><b>Find X% of Y:</b> Y × X ÷ 100.</p><p><b>Find what percent A is of B:</b> A ÷ B × 100.</p><p><b>Example:</b> 20% of 150 = 30.</p>'},
+    age:{title:'Age Calculator — Details',body:'<p>Enter your date of birth and the date on which you want to calculate your age.</p><p>The tool gives years, months and days, plus total days and the next birthday where applicable.</p>'},
+    bmi:{title:'BMI Calculator — Details',body:'<p><b>Metric formula:</b> BMI = weight (kg) ÷ height² (m).</p><p>You can switch between metric and imperial units.</p><p><b>Important:</b> BMI is a screening measure, not a medical diagnosis.</p>'},
+    discount:{title:'Discount + Profit — Details',body:'<p><b>Discount:</b> Discount amount = marked price × discount% ÷ 100.</p><p><b>Sale price:</b> Marked price − discount amount.</p><p><b>Profit:</b> Selling price − cost price. Profit margin = profit ÷ selling price × 100.</p>'},
+    emi:{title:'EMI / Loan Calculator — Details',body:'<p>Calculates estimated monthly loan payment, total payment and total interest from principal, annual interest rate and tenure.</p><p><b>Standard EMI formula:</b> P × r × (1+r)ⁿ ÷ ((1+r)ⁿ−1), where r is the monthly interest rate and n is the number of months.</p><p>The optional extra-payment field is a simple additional monthly amount and does not model lender-specific early-payoff rules.</p>'},
+    tax:{title:'GST / Tax — Details',body:'<p><b>Add tax:</b> Tax = net amount × tax% ÷ 100; total = net + tax.</p><p><b>Extract tax:</b> From an inclusive total, the tool separates the base amount and tax portion using the selected tax rate.</p>'},
+    date:{title:'Date & Time — Details',body:'<p>Use this tool to find the difference between two dates or add/subtract a number of days from a date.</p><p>For date differences, the result is based on calendar dates.</p>'},
+    timezone:{title:'Time Zone Converter — Details',body:'<p>Enter a local date/time and select the source and destination IANA time zones.</p><p>The conversion uses the device/browser time-zone rules, including daylight-saving rules where supported.</p>'},
+    aichat:{title:'AI Chat — Details',body:'<p>Ask the calculator AI for formulas, calculations, explanations and step-by-step solutions.</p><p>You can use English, Urdu, Roman Urdu or mixed language. For the complete chat experience, tap <b>Open Full AI Chat</b>.</p>'}
+  }[tool];
+  if(!info) return;
+  document.getElementById('details-title').textContent=info.title;
+  document.getElementById('method-body').innerHTML=info.body;
+  openDrawer('method');
+}
+
+async function askToolsAI(){
+  const input=document.getElementById('tools-ai-input');
+  const result=document.getElementById('tools-ai-result');
+  const q=(input && input.value || '').trim();
+  if(!q){ result.innerHTML='<span class="tool-muted">Pehle apna question likho.</span>'; return; }
+  result.innerHTML='<span class="tool-muted">AI ko question bhej raha hoon…</span>';
+  try{
+    await openAIChat();
+    await sendChat(q);
+    result.innerHTML='<strong>AI Chat opened</strong><br>Your question has been sent to the full AI chat.';
+  }catch(e){
+    result.innerHTML='<span class="tool-muted">AI chat open nahi ho saka. Full AI Chat button try karo.</span>';
+  }
+}
+
 function openDetails(){
   const body = document.getElementById('method-body');
   body.innerHTML = '';
@@ -2245,9 +2518,14 @@ Practice Question (one, if helpful)
 
 For quick follow-ups (e.g. "sirf answer do", "shortcut batao", "aur example do", "dobara samjhao") just answer that specific request concisely instead of repeating the full structure. Remember the conversation context for follow-ups — including any earlier calculation or question the user is referring back to. Use plain text formatting — no markdown headers, but you may use short line breaks between sections and simple math notation (x², √, ×, ÷, etc).`;
 
-const FAST_MATH_PROMPT = `You are a quick, friendly Math teacher inside a calculator app. Reply in the SAME language/mix the user wrote (English, Urdu, Roman Urdu, Hindi, Hinglish). Start with the final answer in one line, then 2-5 short numbered steps. No long intro, no extra sections, no practice questions unless asked. Keep the whole reply under 150 words. Only maths topics; politely refuse anything else in one line. For follow-ups like "sirf answer" reply in one line.`;
+const FAST_MATH_PROMPT = `You are the main AI assistant inside Smart Calculator Pro. You are NOT limited to mathematics. Answer general knowledge, science, maths, coding, technology, school subjects, writing, explanations, calculations, documents and everyday questions.
+LANGUAGE: Reply in the same language/mix as the user (English, Urdu, Roman Urdu, Hindi, Hinglish).
+QUALITY: Give useful, accurate and detailed answers. For complex questions, explain step-by-step with clear sections. For maths, re-check calculations. For coding, give working code and explain important parts. For current/factual questions, use internet access when available and never invent facts, links, downloads or sources.
+IMAGE/HANDWRITING: When an image is supplied, inspect the whole image carefully. Read printed text and handwriting, numbers, symbols, equations, tables and diagrams. If anything is unclear, mark it with (?) rather than silently guessing.
+DETAIL: Do not impose a 150-word limit. Give enough detail to teach the user. If the user asks for a short answer, be concise.
+ACCURACY: Do not claim an action was performed when it was not. For high-stakes topics, recommend official/professional verification. Plain text, short headings and numbered steps are preferred.`;
 
-const OFFLINE_AI_SYSTEM_PROMPT = `You are a friendly Math teacher inside a calculator app. Always show the final answer first and then explain every step simply. Reply in the same language/mix the student used (English, Urdu, Roman Urdu, or Hindi). Give the answer, then a short clear step-by-step explanation. Keep it concise and only about math.`;
+const OFFLINE_AI_SYSTEM_PROMPT = `You are the offline AI assistant inside Smart Calculator Pro. Answer general questions, not only maths. Reply in the same language/mix as the user. Give a correct, useful and reasonably detailed answer. Explain calculations step-by-step and help with school subjects, coding, writing, technology and everyday questions. You have no live web access while offline, so never pretend to know current information. If an image is supplied through the supported vision path, carefully read visible text, handwriting, equations, tables and diagrams; if something is unclear, say so instead of guessing.`;
 
 /* =========================================================
    FREE OFFLINE AI (WebLLM) — runs a small language model
@@ -2276,13 +2554,47 @@ function offlineAiStatusText(){
   if(webllmLoading) return 'Downloading model… keep this open, only needed once.';
   return 'Not downloaded yet. Pick a model below (one-time download, then works forever offline, completely free).';
 }
+function offlineAiSavedTier(){
+  try{ const t=localStorage.getItem('calc_model_tier'); return OFFLINE_AI_MODELS[t] ? t : null; }catch(e){ return null; }
+}
+function offlineAiEnabled(){
+  try{ return localStorage.getItem('calc_offline_ai_enabled') === '1'; }catch(e){ return false; }
+}
+function setOfflineAiEnabled(v){
+  try{ localStorage.setItem('calc_offline_ai_enabled', v ? '1' : '0'); }catch(e){}
+}
 function refreshOfflineAiDrawer(){
   const el = document.getElementById('offline-ai-status');
   if(el) el.textContent = offlineAiStatusText();
+  const savedTier = offlineAiSavedTier();
+  const toggle = document.getElementById('offline-ai-toggle');
+  const title = document.getElementById('offline-ai-toggle-title');
+  const sub = document.getElementById('offline-ai-toggle-sub');
+  const tbtn = document.getElementById('offline-ai-toggle-btn');
+  if(toggle) toggle.style.display = savedTier ? 'flex' : 'none';
+  if(title) title.textContent = 'Small AI: ' + (offlineAiEnabled() ? 'ON' : 'OFF');
+  if(sub) sub.textContent = offlineAiEnabled() ? 'Chat me downloaded AI use hoga.' : 'Downloaded model saved hai, lekin Chat me disabled hai.';
+  if(tbtn){ tbtn.textContent = offlineAiEnabled() ? 'ON' : 'OFF'; tbtn.className = offlineAiEnabled() ? 'primary' : 'ghost'; }
   const btns = document.getElementById('offline-ai-buttons');
-  if(btns) btns.style.display = (webgpuSupported() && !webllmEngine && !webllmLoading) ? 'flex' : 'none';
+  if(btns) btns.style.display = (webgpuSupported() && !savedTier && !webllmLoading) ? 'flex' : 'none';
   const rm = document.getElementById('offline-ai-remove');
-  if(rm) rm.style.display = webllmEngine ? 'block' : 'none';
+  if(rm) rm.style.display = savedTier ? 'block' : 'none';
+}
+async function toggleOfflineAi(){
+  const savedTier = offlineAiSavedTier();
+  if(!savedTier){ toast('Pehle Small AI download karo'); return; }
+  if(webllmLoading) return;
+  if(offlineAiEnabled()){
+    setOfflineAiEnabled(false);
+    webllmEngine = null;
+    webllmModelId = null;
+    refreshOfflineAiDrawer();
+    toast('Small AI OFF — Chat online AI/fallback use karega');
+    return;
+  }
+  setOfflineAiEnabled(true);
+  refreshOfflineAiDrawer();
+  await downloadOfflineAiModel(savedTier);
 }
 function openOfflineAiSettings(){
   refreshOfflineAiDrawer();
@@ -2318,6 +2630,7 @@ async function downloadOfflineAiModel(tier){
     });
     webllmModelId = modelId;
     try{ localStorage.setItem('calc_model_tier', tier); }catch(e){}
+    setOfflineAiEnabled(true);
     toast('Offline AI ready — works without internet now');
   }catch(e){
     webllmEngine = null;
@@ -2333,12 +2646,12 @@ async function downloadOfflineAiModel(tier){
 /* auto-load the already-downloaded offline AI (from cache) when the app opens */
 window.addEventListener('load', ()=>{
   try{
-    const tier = localStorage.getItem('calc_model_tier');
-    if(tier && OFFLINE_AI_MODELS[tier] && webgpuSupported()) setTimeout(()=>{ downloadOfflineAiModel(tier); }, 2500);
+    const tier = offlineAiSavedTier();
+    if(tier && offlineAiEnabled() && webgpuSupported()) setTimeout(()=>{ downloadOfflineAiModel(tier); }, 2500);
   }catch(e){}
 });
 function removeOfflineAiModel(){
-  try{ localStorage.removeItem('calc_model_tier'); }catch(e){}
+  try{ localStorage.removeItem('calc_model_tier'); localStorage.removeItem('calc_offline_ai_enabled'); }catch(e){}
   webllmEngine = null;
   webllmModelId = null;
   refreshOfflineAiDrawer();
@@ -2354,7 +2667,7 @@ async function generateOfflineAiReply(chat){
     const completion = await webllmEngine.chat.completions.create({
       messages: [{ role: 'system', content: OFFLINE_AI_SYSTEM_PROMPT }, ...history],
       temperature: 0.4,
-      max_tokens: 700
+      max_tokens: 1400
     });
     return completion.choices[0].message.content.trim() || null;
   }catch(e){
@@ -3023,7 +3336,7 @@ async function callOnlineAi(messages, temperature, timeoutMs, visionNeeded){
       if(ep.key) headers['Authorization'] = 'Bearer ' + ep.key;
       const res = await fetch(ep.url, {
         method:'POST', headers,
-        body: JSON.stringify({ model: ep.model, messages, temperature }),
+        body: JSON.stringify({ model: ep.model, messages, temperature, max_tokens: 1400 }),
         signal: ctrl.signal
       });
       if(!res.ok){
@@ -3085,18 +3398,12 @@ async function generateOnlineAiReply(chat){
    If the AI is unreachable, on-device OCR reads the text and
    the normal text flow answers it.
    ========================================================= */
-const IMAGE_READER_SYSTEM_PROMPT = `You are an extremely careful image reader and a warm, clear Mathematics teacher inside a calculator app chat. The user sent a photo or screenshot.
-
-STEP 1 - READ EXACTLY: Look at the WHOLE image, including small print, handwriting, fractions, powers, roots, signs (+ - × ÷), units, tables, graphs and diagrams. Start your reply with the line "What I read from the image:" (translate that line into the user's language) and then transcribe the text, numbers and formulas exactly as written. Briefly describe any diagram, graph or table. Never guess silently: if something is blurry or ambiguous, say which part it is and mark your best reading with (?).
-
-STEP 2 - ANSWER:
-- If it is a math question, solve it. Use these plain-text sections (skip the ones that do not apply): Answer, Step-by-Step Solution, Easy Explanation, Formula Used, Important Notes, Short Trick. Re-check every calculation before giving the final answer.
-- If there are several questions, solve each one in order.
-- If it is not math (a document, notes, a chart, an object, a scene), answer whatever the user asked about it. If the user asked nothing, explain clearly what the image shows and any key information in it.
-
-LANGUAGE: Reply in the same language or mix the user wrote (English, Urdu, Roman Urdu, Hindi, Hinglish). If the user wrote no text, use the language of the text in the image (English if unclear).
-
-FORMAT: plain text only, no markdown headers. Simple math notation (x², √, ×, ÷) is fine.`;
+const IMAGE_READER_SYSTEM_PROMPT = `You are the visual-reading and general AI assistant inside Smart Calculator Pro.
+Read the ENTIRE image carefully before answering. Detect printed text, handwriting, numbers, equations, fractions, powers, roots, signs (+ - × ÷ =), punctuation, units, tables, graphs, diagrams, forms, notes and small text. Handwriting may be messy, tilted, faint or mixed with printed text.
+FIRST: Start with "What I read from the image:" in the user's language and transcribe relevant visible content accurately. Preserve line order and mathematical symbols. If a character or word cannot be read confidently, write (?) rather than inventing it. Describe important graphs/tables/diagrams.
+THEN: Answer the user's question about the image. For maths, solve and re-check. For science, schoolwork, documents, code, charts or general images, answer normally. If no specific question was asked, summarize the image and important details.
+LANGUAGE: Use the same language/mix as the user's message. English, Urdu, Roman Urdu, Hindi and Hinglish are supported.
+DETAIL: Give a complete explanation when needed. Do not impose a 150-word limit. Never claim to read something that is not visible.`;
 
 function compressImageDataUrl(dataUrl, maxSide, quality){
   return new Promise(resolve=>{
@@ -3218,6 +3525,7 @@ async function requestAiReply(chat){
         aiMethod = '';
         let t = await generateOnlineAiReply(chat);
         if(!t && webllmEngine){ t = await generateOfflineAiReply(chat); if(t) aiMethod = 'Phone me chalne wala AI — ' + webllmModelId + ' (bina internet)'; }
+        if(!t){ t = localExplain(o.text); if(t) aiMethod = M_SOLVER; }
         if(!t){ t = attemptOfflineSolve(o.text); if(t) aiMethod = M_CALC; }
         if(t){
           aiMethod = 'Photo padhna: phone me OCR (Tesseract) → phir jawab: ' + aiMethod;
@@ -3231,12 +3539,12 @@ async function requestAiReply(chat){
 
   if(lastMsg && !lastMsg.imageDataUrl){
     showTyping();
-    // 1) built-in solver (instant, explained), 2) on-device AI if downloaded, 3) quick keyless online try
-    let aiText = localExplain(lastMsg.text || '');
-    if(aiText) aiMethod = M_SOLVER;
-    if(!aiText && isShortMathText(lastMsg.text)){ aiText = attemptOfflineSolve(lastMsg.text); if(aiText) aiMethod = M_CALC; }
+    // Internet AI first for broad, detailed answers. Then local AI/solver fallbacks.
+    let aiText = null;
+    if(navigator.onLine !== false){ aiText = await generateOnlineAiReply(chat); }
     if(!aiText && webllmEngine){ aiText = await generateOfflineAiReply(chat); if(aiText) aiMethod = 'Phone me chalne wala AI — ' + webllmModelId + ' (bina internet)'; }
-    if(!aiText) aiText = await generateOnlineAiReply(chat);
+    if(!aiText){ aiText = localExplain(lastMsg.text || ''); if(aiText) aiMethod = M_SOLVER; }
+    if(!aiText && isShortMathText(lastMsg.text)){ aiText = attemptOfflineSolve(lastMsg.text); if(aiText) aiMethod = M_CALC; }
     hideTyping();
     if(aiText){
       const aiMsg = {
@@ -3966,10 +4274,9 @@ function drCloseFull(thenRead){
     if(thenRead === true && typeof drRecognize === 'function') drRecognize();
   });
 }
-function drToggleBar(){
-  drBarBottom = !drBarBottom;
+function drMoveBar(pos){
+  drBarBottom = pos === 'bottom';
   document.getElementById('dr-full').classList.toggle('bar-bottom', drBarBottom);
-  document.getElementById('dr-fmove').textContent = drBarBottom ? '⬆️' : '⬇️';
   setTimeout(()=>{ if(drFull) drSize(); }, 30);
 }
 window.addEventListener('resize', ()=>{
@@ -4599,7 +4906,7 @@ async function saveOfflineAiToDevice(tier){
     const uniq = Array.from(new Set(names));
     const items = uniq.map(n=>({name:n, url:base+n}));
     if(rec.model_lib) items.push({name: rec.model_lib.split('/').pop().split('?')[0], url: rec.model_lib});
-    const folder = 'SmartCalcPro-AI-' + (tier==='small' ? 'File1-Small' : 'File2-Better') + '/';
+    const folder = 'SmartCalcPro-AI-' + (tier==='small' ? 'Small-AI' : 'Large-AI') + '/';
     const entries=[]; let got=0;
     for(let i=0;i<items.length;i++){
       const it=items[i];
@@ -4612,7 +4919,7 @@ async function saveOfflineAiToDevice(tier){
     }
     say('Zip file bana raha hoon…');
     const zip = buildZipBlob(entries);
-    const fname = 'SmartCalcPro-AI-' + (tier==='small' ? 'File1-Small' : 'File2-Better') + '.zip';
+    const fname = 'SmartCalculatorPro-' + (tier==='small' ? 'Small-AI' : 'Large-AI') + '.zip';
     triggerDownload(zip, fname, 900000);
     say('✅ Ho gaya — "' + fname + '" aapke device ke Downloads me save ho rahi hai (' + Math.round(zip.size/1048576) + ' MB).');
     toast('File device me download ho gayi');
@@ -4771,7 +5078,7 @@ async function postChat(ep, messages, temperature, signal){
   if(isAnthropicUrl(ep.url)) return anthropicChat(ep, messages, temperature, signal);
   const headers = { 'Content-Type': 'application/json' };
   if(ep.key) headers['Authorization'] = 'Bearer ' + ep.key;
-  const res = await fetch(ep.url, { method:'POST', headers, body: JSON.stringify({ model: ep.model, messages, temperature, max_tokens: 700 }), signal });
+  const res = await fetch(ep.url, { method:'POST', headers, body: JSON.stringify({ model: ep.model, messages, temperature, max_tokens: 1400 }), signal });
   if(!res.ok){ const e = new Error('HTTP ' + res.status); e.status = res.status; throw e; }
   const data = await res.json();
   const t = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
@@ -4841,6 +5148,236 @@ async function aiAutoTest(){
   el.textContent = t ? '✅ Internet AI chal raha hai. Jawab: ' + t.slice(0,60)
     : '❌ Abhi koi free server nahi chala.\n' + (lastAiError || '') + '\nInternet chalu hai to ⚙️ Advanced me Puter connect karo ya apni key daalo.';
 }
+
+/* =========================================================
+   CALCULATOR TOOLS PACK
+   Offline math tools + online live currency rates
+   ========================================================= */
+const TOOL_UNITS = {
+  length:{
+    units:{m:'Meter', km:'Kilometer', cm:'Centimeter', mm:'Millimeter', mi:'Mile', yd:'Yard', ft:'Foot', in:'Inch'},
+    toBase:{m:1,km:1000,cm:.01,mm:.001,mi:1609.344,yd:.9144,ft:.3048,in:.0254}
+  },
+  weight:{
+    units:{kg:'Kilogram',g:'Gram',mg:'Milligram',lb:'Pound',oz:'Ounce',t:'Metric Ton'},
+    toBase:{kg:1,g:.001,mg:.000001,lb:.45359237,oz:.028349523125,t:1000}
+  },
+  temperature:{
+    units:{C:'Celsius',F:'Fahrenheit',K:'Kelvin'},
+  },
+  speed:{
+    units:{mps:'m/s',kmh:'km/h',mph:'mph',knot:'Knot'},
+    toBase:{mps:1,kmh:1/3.6,mph:.44704,knot:.5144444444}
+  },
+  area:{
+    units:{m2:'m²',km2:'km²',cm2:'cm²',ft2:'ft²',yd2:'yd²',acre:'Acre',hectare:'Hectare'},
+    toBase:{m2:1,km2:1e6,cm2:1e-4,ft2:.09290304,yd2:.83612736,acre:4046.8564224,hectare:10000}
+  }
+};
+const FX_CURRENCIES = {
+  PKR:'Pakistani Rupee', USD:'US Dollar', EUR:'Euro', GBP:'British Pound', AED:'UAE Dirham',
+  SAR:'Saudi Riyal', INR:'Indian Rupee', CAD:'Canadian Dollar', AUD:'Australian Dollar',
+  JPY:'Japanese Yen', CNY:'Chinese Yuan', TRY:'Turkish Lira', MYR:'Malaysian Ringgit',
+  SGD:'Singapore Dollar', CHF:'Swiss Franc', NZD:'New Zealand Dollar', QAR:'Qatari Riyal',
+  KWD:'Kuwaiti Dinar', BHD:'Bahraini Dinar', OMR:'Omani Rial', SEK:'Swedish Krona',
+  NOK:'Norwegian Krone', DKK:'Danish Krone'
+};
+const TZ_LIST = [
+  ['Asia/Karachi','Pakistan — Karachi'],['UTC','UTC'],['Asia/Dubai','UAE — Dubai'],
+  ['Asia/Riyadh','Saudi Arabia — Riyadh'],['Asia/Kolkata','India — Kolkata'],
+  ['Europe/London','UK — London'],['Europe/Paris','France — Paris'],
+  ['Europe/Berlin','Germany — Berlin'],['America/New_York','USA — New York'],
+  ['America/Chicago','USA — Chicago'],['America/Denver','USA — Denver'],
+  ['America/Los_Angeles','USA — Los Angeles'],['America/Toronto','Canada — Toronto'],
+  ['Asia/Tokyo','Japan — Tokyo'],['Asia/Shanghai','China — Shanghai'],
+  ['Asia/Singapore','Singapore'],['Australia/Sydney','Australia — Sydney']
+];
+
+function toolNum(id, fallback=0){
+  const n=parseFloat(document.getElementById(id)?.value);
+  return Number.isFinite(n)?n:fallback;
+}
+function fmtTool(n, max=6){
+  if(!Number.isFinite(n)) return '—';
+  return new Intl.NumberFormat(undefined,{maximumFractionDigits:max}).format(n);
+}
+function localDateInput(d=new Date()){
+  const x=new Date(d.getTime()-d.getTimezoneOffset()*60000);
+  return x.toISOString().slice(0,10);
+}
+function localDateTimeInput(d=new Date()){
+  const x=new Date(d.getTime()-d.getTimezoneOffset()*60000);
+  return x.toISOString().slice(0,16);
+}
+function switchTool(name){
+  document.querySelectorAll('.tools-tab').forEach(b=>b.classList.toggle('active',b.dataset.tool===name));
+  document.querySelectorAll('.tool-card').forEach(c=>c.classList.toggle('active',c.dataset.card===name));
+}
+function populateUnitOptions(){
+  const cat=document.getElementById('unit-category').value, data=TOOL_UNITS[cat];
+  ['unit-from','unit-to'].forEach((id,idx)=>{
+    const s=document.getElementById(id);
+    s.innerHTML=Object.entries(data.units).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+    if(idx===1) s.selectedIndex=Math.min(1,s.options.length-1);
+  });
+  if(cat==='temperature'){document.getElementById('unit-from').value='C';document.getElementById('unit-to').value='F';}
+  convertUnit();
+}
+function convertUnit(){
+  const cat=document.getElementById('unit-category').value, data=TOOL_UNITS[cat];
+  const val=toolNum('unit-value',0), from=document.getElementById('unit-from').value, to=document.getElementById('unit-to').value;
+  let out;
+  if(cat==='temperature'){
+    let c=from==='C'?val:from==='F'?(val-32)*5/9:val-273.15;
+    out=to==='C'?c:to==='F'?c*9/5+32:c+273.15;
+  }else{
+    out=val*data.toBase[from]/data.toBase[to];
+  }
+  document.getElementById('unit-result').innerHTML=`<strong>${fmtTool(out,8)}</strong> ${data.units[to]}`;
+}
+function initCurrency(){
+  const opts=Object.entries(FX_CURRENCIES).map(([k,v])=>`<option value="${k}">${k} — ${v}</option>`).join('');
+  document.getElementById('fx-from').innerHTML=opts;
+  document.getElementById('fx-to').innerHTML=opts;
+  document.getElementById('fx-from').value='PKR';
+  document.getElementById('fx-to').value='USD';
+}
+function swapFx(){
+  const a=document.getElementById('fx-from'),b=document.getElementById('fx-to'); [a.value,b.value]=[b.value,a.value]; convertCurrency();
+}
+async function convertCurrency(){
+  const amount=toolNum('fx-amount',1), from=document.getElementById('fx-from').value, to=document.getElementById('fx-to').value;
+  const result=document.getElementById('fx-result'), status=document.getElementById('fx-status');
+  if(amount<0){result.textContent='Amount cannot be negative.';return;}
+  if(from===to){result.innerHTML=`<strong>${fmtTool(amount,6)} ${from}</strong> = ${fmtTool(amount,6)} ${to}`;status.textContent='Same currency.';return;}
+  result.textContent='Loading live rate…'; status.textContent='Internet se latest available rate li ja rahi hai…';
+  try{
+    const res=await fetch(`https://api.frankfurter.dev/v2/rate/${encodeURIComponent(from)}/${encodeURIComponent(to)}`,{cache:'no-store'});
+    if(!res.ok) throw new Error('Rate service returned HTTP '+res.status);
+    const data=await res.json(), rate=Number(data.rate);
+    if(!Number.isFinite(rate)) throw new Error('Rate unavailable');
+    result.innerHTML=`<strong>${fmtTool(amount*rate,6)} ${to}</strong><br>1 ${from} = ${fmtTool(rate,8)} ${to}`;
+    status.textContent=`Live rate source updated: ${data.date || 'latest available'} · rates can change.`;
+  }catch(e){
+    result.innerHTML='❌ Live rate could not be loaded right now.<br><span class="tool-muted">Check internet and try again.</span>';
+    status.textContent=String(e.message||e);
+  }
+}
+function calcPercent(){
+  const p=toolNum('pct-a'), n=toolNum('pct-b'), a=toolNum('pct-c'), b=toolNum('pct-d');
+  const part=n*p/100, ratio=b? a/b*100:NaN, change=a? (b-a)/a*100:NaN;
+  document.getElementById('pct-result').innerHTML=
+    `${fmtTool(p)}% of ${fmtTool(n)} = <strong>${fmtTool(part)}</strong><br>`+
+    `${fmtTool(a)} is <strong>${fmtTool(ratio)}%</strong> of ${fmtTool(b)}.`+
+    (Number.isFinite(change)?`<br>Change from ${fmtTool(a)} to ${fmtTool(b)} = <strong>${fmtTool(change)}%</strong>.`:'');
+}
+function calcAge(){
+  const dob=new Date(document.getElementById('age-dob').value+'T00:00:00'), on=new Date(document.getElementById('age-on').value+'T00:00:00');
+  if(!document.getElementById('age-dob').value||!document.getElementById('age-on').value||isNaN(dob)||isNaN(on)||dob>on){
+    document.getElementById('age-result').textContent='Please choose a valid DOB and calculation date.'; return;
+  }
+  let y=on.getFullYear()-dob.getFullYear(), m=on.getMonth()-dob.getMonth(), d=on.getDate()-dob.getDate();
+  if(d<0){m--; const daysPrev=new Date(on.getFullYear(),on.getMonth(),0).getDate(); d+=daysPrev;}
+  if(m<0){y--;m+=12;}
+  const next=new Date(on.getFullYear(),dob.getMonth(),dob.getDate());
+  if(next<on) next.setFullYear(on.getFullYear()+1);
+  const daysNext=Math.ceil((next-on)/86400000);
+  const totalDays=Math.floor((on-dob)/86400000);
+  document.getElementById('age-result').innerHTML=
+    `Age: <strong>${y} years, ${m} months, ${d} days</strong><br>`+
+    `Total days lived: <strong>${fmtTool(totalDays,0)}</strong><br>`+
+    `Next birthday: <strong>${next.toLocaleDateString()}</strong> (${fmtTool(daysNext,0)} days)`;
+}
+function updateBmiLabels(){
+  const imp=document.getElementById('bmi-mode').value==='imperial';
+  document.getElementById('bmi-weight-label').textContent=imp?'Weight (lb)':'Weight (kg)';
+  document.getElementById('bmi-height-label').textContent=imp?'Height (in)':'Height (cm)';
+}
+function calcBMI(){
+  const imp=document.getElementById('bmi-mode').value==='imperial', w=toolNum('bmi-weight'), h=toolNum('bmi-height');
+  if(w<=0||h<=0){document.getElementById('bmi-result').textContent='Enter valid height and weight.';return;}
+  const bmi=imp?703*w/(h*h):w/((h/100)**2);
+  let cat=bmi<18.5?'Underweight':bmi<25?'Normal range':bmi<30?'Overweight':'Obesity';
+  document.getElementById('bmi-result').innerHTML=`BMI: <strong>${fmtTool(bmi,2)}</strong><br>Category: <strong>${cat}</strong>`;
+}
+function calcDiscountProfit(){
+  const price=toolNum('disc-price'), pct=toolNum('disc-pct'), cost=toolNum('profit-cost');
+  const saving=price*pct/100, saleDefault=price-saving, typed=document.getElementById('profit-sale').value.trim();
+  const sale=typed===''?saleDefault:parseFloat(typed), profit=sale-cost, margin=sale?profit/sale*100:NaN;
+  document.getElementById('disc-result').innerHTML=
+    `Discount: <strong>${fmtTool(saving)}</strong><br>Sale price: <strong>${fmtTool(saleDefault)}</strong>`+
+    `<br>Profit: <strong>${fmtTool(profit)}</strong> (${fmtTool(margin)}% margin)`;
+}
+function calcEMI(){
+  const P=toolNum('emi-principal'), annual=toolNum('emi-rate'), n=Math.max(1,Math.round(toolNum('emi-months'))), extra=Math.max(0,toolNum('emi-extra'));
+  if(P<=0){document.getElementById('emi-result').textContent='Enter a valid loan amount.';return;}
+  const r=annual/100/12, emi=r===0?P/n:P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  const payment=emi+extra, total=payment*n, interest=total-P;
+  document.getElementById('emi-result').innerHTML=
+    `<div class="tool-kpis"><div class="tool-kpi"><span>Monthly EMI</span><b>${fmtTool(emi,2)}</b></div>`+
+    `<div class="tool-kpi"><span>Total payment</span><b>${fmtTool(total,2)}</b></div>`+
+    `<div class="tool-kpi"><span>Total interest</span><b>${fmtTool(interest,2)}</b></div>`+
+    `<div class="tool-kpi"><span>With extra/month</span><b>${fmtTool(payment,2)}</b></div></div>`+
+    `<div class="tool-muted" style="margin-top:8px">Extra payment is shown as a simple monthly addition; actual lender schedules can differ.</div>`;
+}
+function calcTax(){
+  const amount=toolNum('tax-amount'), rate=toolNum('tax-rate'), mode=document.getElementById('tax-mode').value;
+  if(rate<0||amount<0){document.getElementById('tax-result').textContent='Enter valid non-negative values.';return;}
+  let net,tax,gross;
+  if(mode==='exclusive'){net=amount;tax=amount*rate/100;gross=net+tax;}
+  else {gross=amount;net=amount/(1+rate/100);tax=gross-net;}
+  document.getElementById('tax-result').innerHTML=`Net amount: <strong>${fmtTool(net,2)}</strong><br>Tax/GST: <strong>${fmtTool(tax,2)}</strong><br>Gross / total: <strong>${fmtTool(gross,2)}</strong>`;
+}
+function parseLocalDate(s){return new Date(s+'T00:00:00');}
+function calcDateTool(){
+  const a=parseLocalDate(document.getElementById('date-start').value), b=parseLocalDate(document.getElementById('date-end').value), days=Math.round(toolNum('date-days'));
+  if(isNaN(a)||isNaN(b)){document.getElementById('date-result').textContent='Choose both start and end dates.';return;}
+  const diff=Math.round((b-a)/86400000);
+  const base=a, moved=new Date(base); moved.setDate(moved.getDate()+(document.getElementById('date-dir').value==='add'?days:-days));
+  document.getElementById('date-result').innerHTML=`Difference: <strong>${fmtTool(Math.abs(diff),0)} days</strong>${diff<0?' (end date is earlier)':''}<br>`+
+    `${fmtTool(days,0)} days ${document.getElementById('date-dir').value==='add'?'after':'before'} start: <strong>${moved.toLocaleDateString()}</strong>`;
+}
+function initTimezone(){
+  const opts=TZ_LIST.map(([v,n])=>`<option value="${v}">${n}</option>`).join('');
+  document.getElementById('tz-from').innerHTML=opts; document.getElementById('tz-to').innerHTML=opts;
+  document.getElementById('tz-from').value='Asia/Karachi'; document.getElementById('tz-to').value='America/New_York';
+}
+function getTimeZoneOffsetMinutes(date,timeZone){
+  const parts=new Intl.DateTimeFormat('en-US',{timeZone,hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}).formatToParts(date);
+  const o={}; parts.forEach(p=>o[p.type]=p.value);
+  const asUTC=Date.UTC(+o.year,+o.month-1,+o.day,+o.hour==='24'?0:+o.hour,+o.minute,+o.second);
+  return Math.round((asUTC-date.getTime())/60000);
+}
+function zonedDateToUtc(local,timeZone){
+  const [ds,ts]=local.split('T'), [y,m,d]=ds.split('-').map(Number), [hh,mm]=ts.split(':').map(Number);
+  let utc=Date.UTC(y,m-1,d,hh,mm,0);
+  for(let i=0;i<3;i++){const off=getTimeZoneOffsetMinutes(new Date(utc),timeZone); utc=Date.UTC(y,m-1,d,hh,mm,0)-off*60000;}
+  return new Date(utc);
+}
+function formatInZone(date,tz){
+  return new Intl.DateTimeFormat(undefined,{timeZone:tz,dateStyle:'medium',timeStyle:'short'}).format(date);
+}
+function convertTimezone(){
+  const local=document.getElementById('tz-datetime').value, from=document.getElementById('tz-from').value, to=document.getElementById('tz-to').value;
+  if(!local){document.getElementById('tz-result').textContent='Choose a date/time first.';return;}
+  try{
+    const instant=zonedDateToUtc(local,from);
+    document.getElementById('tz-result').innerHTML=`<strong>${formatInZone(instant,to)}</strong><br>`+
+      `<span class="tool-muted">${from} → ${to}</span><br><span class="tool-muted">Converted using your device/browser time-zone data.</span>`;
+  }catch(e){document.getElementById('tz-result').textContent='Could not convert this time.';}
+}
+function initCalculatorTools(){
+  populateUnitOptions(); initCurrency(); initTimezone();
+  const now=new Date(), today=localDateInput(now);
+  document.getElementById('age-on').value=today;
+  document.getElementById('date-start').value=today;
+  const tomorrow=new Date(now); tomorrow.setDate(tomorrow.getDate()+1);
+  document.getElementById('date-end').value=localDateInput(tomorrow);
+  document.getElementById('tz-datetime').value=localDateTimeInput(now);
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initCalculatorTools);
+else initCalculatorTools();
+
 </script>
 
 </body>
