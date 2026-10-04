@@ -2553,6 +2553,12 @@ let webllmLoading = false;
 function webgpuSupported(){ return !!navigator.gpu; }
 
 let lastOfflineAiError = '';
+function hybridAiModeText(){
+  if(navigator.onLine === false) return 'Offline mode — device AI / calculator fallback';
+  if(webllmEngine) return 'Auto mode — Internet AI first, device AI fallback';
+  return 'Auto mode — Internet AI first, device AI prepares automatically';
+}
+
 function offlineAiStatusText(){
   if(lastOfflineAiError && !webllmEngine && !webllmLoading) return '❌ App me AI load nahi hua.\n' + lastOfflineAiError;
   if(!webgpuSupported()) return "Your browser/device doesn't support offline AI (needs WebGPU — try Chrome on a fairly recent phone or PC).";
@@ -2571,7 +2577,7 @@ function setOfflineAiEnabled(v){
 }
 function refreshOfflineAiDrawer(){
   const el = document.getElementById('offline-ai-status');
-  if(el) el.textContent = offlineAiStatusText();
+  if(el) el.textContent = offlineAiStatusText() + '\n\n' + hybridAiModeText();
   const savedTier = offlineAiSavedTier();
   const toggle = document.getElementById('offline-ai-toggle');
   const title = document.getElementById('offline-ai-toggle-title');
@@ -2659,6 +2665,8 @@ window.addEventListener('load', ()=>{
     if(webgpuSupported()) setTimeout(()=>{ ensureOfflineAiReady(); }, 1800);
   }catch(e){}
 });
+window.addEventListener('online', ()=>{ try{ toast('Internet connected — AI will use Internet automatically'); refreshOfflineAiDrawer(); }catch(e){} });
+window.addEventListener('offline', ()=>{ try{ toast('Offline mode — device AI/calculator fallback active'); refreshOfflineAiDrawer(); }catch(e){} });
 function removeOfflineAiModel(){
   try{ localStorage.removeItem('calc_model_tier'); localStorage.removeItem('calc_offline_ai_enabled'); }catch(e){}
   webllmEngine = null;
@@ -3565,16 +3573,22 @@ async function requestAiReply(chat){
 
   if(lastMsg && !lastMsg.imageDataUrl){
     showTyping();
-    // No API key and no manual setup: automatically prepare the on-device AI.
+    // HYBRID AUTO MODE: Internet first when available; if the online provider
+    // fails, the device AI takes over, then the built-in calculator engine.
     let aiText = null;
-    if(!webllmEngine) await ensureOfflineAiReady();
-    if(webllmEngine){
-      aiText = await generateOfflineAiReply(chat);
-      if(aiText) aiMethod = 'Phone me chalne wala AI — ' + webllmModelId + ' (bina API key)';
+    if(navigator.onLine !== false){
+      try{ aiText = await generateOnlineAiReply(chat); }catch(e){ aiText = null; }
+      if(aiText) aiMethod = 'Internet AI (automatic)';
+    }
+    if(!aiText){
+      if(!webllmEngine) await ensureOfflineAiReady();
+      if(webllmEngine){
+        aiText = await generateOfflineAiReply(chat);
+        if(aiText) aiMethod = 'Phone me chalne wala AI — ' + webllmModelId + ' (offline fallback)';
+      }
     }
     if(!aiText){ aiText = localExplain(lastMsg.text || ''); if(aiText) aiMethod = M_SOLVER; }
     if(!aiText && isShortMathText(lastMsg.text)){ aiText = attemptOfflineSolve(lastMsg.text); if(aiText) aiMethod = M_CALC; }
-    if(!aiText && navigator.onLine !== false){ aiText = await generateOnlineAiReply(chat); }
     hideTyping();
     if(aiText){
       const aiMsg = {
