@@ -1,0 +1,10 @@
+{
+  "name": "Smart Calculator Pro AI",
+  "short_name": "Calc Pro AI",
+  "description": "AI calculator chat for math, photos, handwriting and documents.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1b22",
+  "theme_color": "#1a1b22",
+  "icons": [{ "src": "/favicon.ico", "sizes": "64x64", "type": "image/x-icon" }]
+}
