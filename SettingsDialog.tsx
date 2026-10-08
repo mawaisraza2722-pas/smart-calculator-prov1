@@ -37,7 +37,7 @@ export function SettingsDialog({ open, onOpenChange }: { open: boolean; onOpenCh
               {s.provider === p && <Check className="size-5 text-primary" />}
             </button>
           ))}
-          <p className="text-xs text-muted-foreground">Online AI runs securely on the app server through AIMLAPI. Your API key stays server-side; usage depends on your AIMLAPI account/credits.</p>
+          <p className="text-xs text-muted-foreground">Online AI runs securely on the server using the owner's AIMLAPI account. Your API key is never shown to users. Usage depends on the AIMLAPI account/plan and rate limits.</p>
         </section>
 
         <section className="space-y-3">
