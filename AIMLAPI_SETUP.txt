@@ -1,0 +1,29 @@
+SMART CALCULATOR PRO — AIMLAPI PATCH
+
+Files in this patch are ONLY files that must be added/replaced. Your existing app files are intentionally not included.
+
+1) Replace these existing files in your project with the versions from this ZIP:
+   - src/lib/ai/chat.server.ts
+   - src/components/chat/SettingsDialog.tsx
+   - vite.config.ts
+
+2) Add this new file at the project root:
+   - netlify.toml
+
+3) Netlify Environment Variable:
+   Name: AIMLAPI_KEY
+   Value: your existing AIMLAPI secret key
+   Scope: Production (and Preview if you want previews to use AI)
+
+DO NOT put the key inside HTML, React code, GitHub, or any VITE_* variable.
+
+4) Deploy/rebuild the site. The existing /api/chat route remains in place; the server now sends chat requests directly to AIMLAPI.
+
+5) The UI provider choices map to these AIMLAPI models:
+   Auto / ChatGPT -> openai/gpt-5-5
+   Claude -> anthropic/claude-sonnet-4.6
+   Gemini -> google/gemini-3.7-flash
+
+AIMLAPI is OpenAI-compatible and uses https://api.aimlapi.com/v1/chat/completions. Model availability and account credits/rate limits are controlled by AIMLAPI.
+
+IMPORTANT: This patch does not contain or reveal any API key.
