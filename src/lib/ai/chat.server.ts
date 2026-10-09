@@ -1,4 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { convertToModelMessages, stepCountIs, streamText, type UIMessage } from "ai";
@@ -55,8 +56,6 @@ function friendlyError(error: unknown): string {
 }
 
 export async function handleChat(request: Request): Promise<Response> {
-  const apiKey = process.env['LOVABLE_API_KEY'];
-  if (!apiKey) return new Response("AI is not configured on the server.", { status: 500 });
 
   let parsed: z.infer<typeof bodySchema>;
   try {
@@ -66,6 +65,16 @@ export async function handleChat(request: Request): Promise<Response> {
   }
   const messages = parsed.messages as UIMessage[];
   const provider = parsed.provider;
+  const apiKey =
+    provider === "gemini"
+        ? process.env["GEMINI_API_KEY"]
+            : process.env["LOVABLE_API_KEY"];
+
+            if (!apiKey) {
+              return new Response("AI API key is missing on the server.", {
+                  status: 500,
+                    });
+                    }
   const modelId = PROVIDER_MODELS[provider];
   const runIdFetch = createLovableAiGatewayRunIdFetch(getLovableAiGatewayRunId(request));
 
@@ -83,13 +92,10 @@ export async function handleChat(request: Request): Promise<Response> {
     model = anthropic(modelId);
     extra = { maxOutputTokens: 16000 };
   } else if (provider === "gemini") {
-    const g = createOpenAICompatible({
-      name: "lovable",
-      baseURL: GATEWAY,
-      headers: { "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "vercel-ai-sdk" },
-      fetch: runIdFetch.fetch,
-    });
-    model = g(modelId);
+      const google = createGoogleGenerativeAI({
+          apiKey,
+            });
+              model = google("gemini-2.5-flash");
   } else {
     const openai = createOpenAI({
       baseURL: GATEWAY,
